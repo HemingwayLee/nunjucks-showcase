@@ -1,0 +1,27 @@
+{
+  "name": "nunjucks-showcase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ywlee",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nunjucks": "^3.2.3",
+    "pg": "^8.7.3",
+    "randomstring": "^1.2.2",
+    "typeorm": "^0.2.45"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "./src"
+    ],
+    "ext": "js,mjs,json,css,html"
+  }
+}
