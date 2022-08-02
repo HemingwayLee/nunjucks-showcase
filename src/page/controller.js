@@ -12,10 +12,3 @@ exports.addresses = async (req, res) => {
   res.render('addresses.html', data)
 }
 
-exports.tokens = async (req, res) => {
-  const data = {
-    pageid: "tokens"
-  }
-  res.render('tokens.html', data)
-}
-

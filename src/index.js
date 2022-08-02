@@ -54,7 +54,7 @@ function runExpress() {
 }
 
 (async () => {
-  // console.log(`The project ID is ${process.env.PROJECT_ID}`)
+  console.log(`The project ID is ${process.env.PROJECT_ID}`)
 
   runExpress();
 

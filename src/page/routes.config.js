@@ -18,8 +18,5 @@ exports.routesConfig = function(app) {
   app.get('/page/addresses/', [
     pageController.addresses
   ]);
-
-  app.get('/page/tokens/', [
-    pageController.tokens
-  ]);
+  
 }
