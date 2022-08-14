@@ -5,6 +5,10 @@ exports.routesConfig = function(app) {
     dbController.getAllAddress
   ]);
 
+  app.post('/db/address/add', [
+    dbController.addAddress
+  ]);
+
   app.get('/db/client/all', [
     dbController.getAllClients
   ]);

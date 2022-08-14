@@ -10,9 +10,19 @@ exports.getAllAddress = async (req, res) => {
   }
 }
 
+exports.addAddress = async (req, res) => {
+  const { address, zipcode } = req.body;
+  const result = await addressModel.insertAddress(address, zipcode);
+  if (result.isSucceeded) {
+    res.status(200).send(result);
+  } else {
+    res.status(500).send(result);
+  }
+}
+
 exports.addClient = async (req, res) => {
-  const { title, code } = req.body;
-  const result = await clientModel.addClient(title, code);
+  const { name } = req.body;
+  const result = await clientModel.addClient(name);
   if (result.isSucceeded) {
     res.status(200).send(result);
   } else {

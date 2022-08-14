@@ -9,11 +9,19 @@ const config = require('./config')
 
 async function initData(conn) {
   const address = config.getAddressFromJson();
-
   await conn.then(async conn => {
     const repo = await conn.getRepository("Addresses");
     await repo.clear();
     await repo.save(address);
+  }).catch(error => {
+    console.log(error);
+  });
+
+  const clients = config.getClientFromJson();
+  await conn.then(async conn => {
+    const repo = await conn.getRepository("Clients");
+    await repo.clear();
+    await repo.save(clients);
   }).catch(error => {
     console.log(error);
   });

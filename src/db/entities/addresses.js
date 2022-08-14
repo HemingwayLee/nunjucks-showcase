@@ -9,6 +9,9 @@ module.exports = {
     address: {
       type: "varchar"
     },
+    zipcode: {
+      type: "varchar"
+    },
     createdAt: {
       type: "float"
     }

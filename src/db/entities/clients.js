@@ -9,9 +9,6 @@ module.exports = {
     name: {
       type: "varchar"
     },
-    zipcode: {
-      type: "varchar"
-    },
     createdAt: {
       type: "float"
     }
