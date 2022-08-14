@@ -1,7 +1,5 @@
 const addressModel = require("./address.model")
-const smartContractModel = require("./smartContract.model")
-const transactionModel = require("./transactions.model")
-const deployedSmartContractModel = require("./deployedSmartContract.model")
+const clientModel = require("./client.model")
 
 exports.getAllAddress = async (req, res) => {
   const result = await addressModel.getAllAddress();
@@ -12,9 +10,9 @@ exports.getAllAddress = async (req, res) => {
   }
 }
 
-exports.addSmartContract = async (req, res) => {
+exports.addClient = async (req, res) => {
   const { title, code } = req.body;
-  const result = await smartContractModel.addSmartContract(title, code);
+  const result = await clientModel.addClient(title, code);
   if (result.isSucceeded) {
     res.status(200).send(result);
   } else {
@@ -22,26 +20,8 @@ exports.addSmartContract = async (req, res) => {
   }
 }
 
-exports.getAllSmartContract = async (req, res) => {
-  const result = await smartContractModel.getAllSmartContract();
-  if (result.isSucceeded) {
-    res.status(200).send(result);
-  } else {
-    res.status(500).send(result);
-  }
-}
-
-exports.getAllDeployedSmartContract = async (req, res) => {
-  const result = await deployedSmartContractModel.getAllDeployedSmartContract();
-  if (result.isSucceeded) {
-    res.status(200).send(result);
-  } else {
-    res.status(500).send(result);
-  }
-}
-
-exports.getAllTransaction = async (req, res) => {
-  const result = await transactionModel.getAllTransactions();
+exports.getAllClients = async (req, res) => {
+  const result = await clientModel.getAllClients();
   if (result.isSucceeded) {
     res.status(200).send(result);
   } else {

@@ -1,16 +1,16 @@
 module.exports = {
-  name: "SmartContract",
+  name: "Clients",
   columns: {
     id: {
       primary: true,
       type: "int",
       generated: true
     },
-    title: {
+    name: {
       type: "varchar"
     },
-    code: {
-      type: "text"
+    zipcode: {
+      type: "varchar"
     },
     createdAt: {
       type: "float"

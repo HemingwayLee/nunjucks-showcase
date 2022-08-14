@@ -8,32 +8,15 @@ const orm = require('./db/db.config')
 const config = require('./config')
 
 async function initData(conn) {
-  // const accounts = config.getAccountsFromEnv();
+  const address = config.getAddressFromJson();
 
-  // await conn.then(async conn => {
-  //   const repo = await conn.getRepository("Addresses");
-  //   await repo.clear();
-  //   await repo.save(accounts);
-  // }).catch(error => {
-  //   console.log(error);
-  // });
-
-  // const ret = config.getExistingSolidityCodeFromDisk();
-  // await conn.then(async conn => {
-  //   const repo = await conn.getRepository("SmartContract");
-  //   await repo.clear();
-  //   await repo.save(ret.solEntries);
-  // }).catch(error => {
-  //   console.log(error);
-  // });
-
-  // await conn.then(async conn => {
-  //   const repo = await conn.getRepository("DeployedSmartContract");
-  //   await repo.clear();
-  //   await repo.save(ret.scEntries);
-  // }).catch(error => {
-  //   console.log(error);
-  // });
+  await conn.then(async conn => {
+    const repo = await conn.getRepository("Addresses");
+    await repo.clear();
+    await repo.save(address);
+  }).catch(error => {
+    console.log(error);
+  });
 }
 
 function addRoutes(app) {

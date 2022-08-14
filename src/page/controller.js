@@ -12,3 +12,10 @@ exports.addresses = async (req, res) => {
   res.render('addresses.html', data)
 }
 
+exports.clients = async (req, res) => {
+  const data = {
+    pageid: "clients"
+  }
+  res.render('clients.html', data)
+}
+

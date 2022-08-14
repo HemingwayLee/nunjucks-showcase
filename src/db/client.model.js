@@ -1,13 +1,12 @@
 const orm = require("./db.config")
 
-exports.addSmartContract = async (title, code) => {
+exports.addClient = async (name) => {
   let result = { isSucceeded: true };
 
   await orm.conn.then(async conn => {
-    const repo = await conn.getRepository("SmartContract");
+    const repo = await conn.getRepository("Clients");
     await repo.save({
-      title: title,
-      code: code,
+      name: name,
       createdAt: Date.now()
     });
   }).catch(error => {
@@ -18,12 +17,12 @@ exports.addSmartContract = async (title, code) => {
   return result;
 }
 
-exports.getSmartContractById = async id => {
-  let result = { isSucceeded: true, theContract: null };
+exports.getClientById = async id => {
+  let result = { isSucceeded: true, theClient: null };
 
   await orm.conn.then(async conn => {
-    const repo = await conn.getRepository("SmartContract");
-    result.theContract = await repo.findOne(
+    const repo = await conn.getRepository("Clients");
+    result.theClient = await repo.findOne(
       { 
         where: { id: id }
       }
@@ -36,12 +35,12 @@ exports.getSmartContractById = async id => {
   return result;
 }
 
-exports.getAllSmartContract = async () => {
-  let result = { isSucceeded: true, smartContracts: [] };
+exports.getAllClients = async () => {
+  let result = { isSucceeded: true, clients: [] };
   
   await orm.conn.then(async conn => {
-    const repo = await conn.getRepository("SmartContract");
-    result.smartContracts = await repo.find();
+    const repo = await conn.getRepository("Clients");
+    result.clients = await repo.find();
   }).catch(error => {
     result = { isSucceeded: false, msg: error.message }
     console.log(error);

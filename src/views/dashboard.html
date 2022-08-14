@@ -10,7 +10,7 @@
     <div class="col-sm-9 main">
       <div class="row">
         <div id="msg"></div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="panel panel-primary"> 
             <div class="panel-body">
               <div style="display:block;"> 
@@ -21,24 +21,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="panel panel-primary"> 
             <div class="panel-body">
               <div style="display:block;"> 
                 <i style="font-size: 72px" class="pull-right fas fa-file-signature"></i> 
-                <h1 id="countSmartContract"></h1>
-                <h4>Smart Contract</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="panel panel-primary"> 
-            <div class="panel-body">
-              <div style="display:block;"> 
-                <i style="font-size: 72px" class="pull-right glyphicon glyphicon-picture"></i> 
-                <h1 id="">3</h1>
-                <h4>ERC-721 Tokens</h4>
+                <h1 id="countClient"></h1>
+                <h4>Clients</h4>
               </div>
             </div>
           </div>
@@ -46,52 +35,29 @@
       </div>
 
       <div class="row">
-        <h1>This is TESTNET Ropsten</h1>
-        <hr>
-        <h2>All Managed Addresses</h2>
+        <h2>All Addresses</h2>
         <table id="allAddresses" class="table table-striped">
           <thead>
             <tr>
               <th>Address</th>
               <th>Created At</th>
-              <th>Balance</th>
-              <th>Got Balance At</th>
-              <th>Get Balance</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
         <hr>
-        <h2>My Transactions</h2>
-        <table id="allTransactions" class="table table-striped">
+        <h2>My Clients</h2>
+        <table id="clients" class="table table-striped">
           <thead>
             <tr>
-              <th>Hash</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Mined</th>
+              <th>Name</th>
               <th>Created At</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
-
-        <!-- <h2>My Transactions in latest 5 blocks</h2>
-        <table id="allTransactionsFromBlocks" class="table table-striped">
-          <thead>
-            <tr>
-              <th>Transaction</th>
-              <th>Address</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table> -->
       </div>
     </div>
   </div>
@@ -117,14 +83,8 @@
           let tr = $("<tr>");
           tr.append($("<td>").text(ele.address));
           tr.append($("<td>").text(moment.utc(ele.createdAt).fromNow()));
-          tr.append($("<td>").text(ele.balance));
-          tr.append($("<td>").text(moment.utc(ele.gotBalanceAt).fromNow()));
-          tr.append($("<td>").append($(`<button class="btn btn-primary" onclick="getBalance('${idx}');">`).text("Get Balance")));
           $("#allAddresses tbody").append(tr);
         });
-
-        // getAllTransactionsFromBlocks();
-      
       },
       error: function(xhr, textStatus, errorThrown) {
         $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
@@ -132,84 +92,15 @@
     });
   }
 
-  function getAllSmartContracts() {
-    const urlTarget = window.location.protocol + "//" + window.location.host + '/db/smartcontract/all/';
+  function getAllClients() {
+    const urlTarget = window.location.protocol + "//" + window.location.host + '/db/client/all/';
     
     $.ajax({
       type: 'GET',
       dataType: 'json',
       url: urlTarget,
       success: function(data) {
-        $("#countSmartContract").text(data.smartContracts.length);
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
-      },
-    });
-  }
-
-  function getAllTransactionsFromBlocks() {
-    if (gAllAddresses.length == 0) {
-      return;
-    }
-
-    const urlTarget = window.location.protocol + "//" + window.location.host + '/eth/transaction/all/block/5';
-    
-    $.ajax({
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        addresses: gAllAddresses.map(x => x.address)
-      }),
-      dataType: 'json',
-      url: urlTarget,
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
-      },
-    });
-  }
-
-  function getAllTransactions() {
-    const urlTarget = window.location.protocol + "//" + window.location.host + '/db/transaction/all/';
-    
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: urlTarget,
-      success: function(data) {
-        $("#allTransactions tbody").empty();
-        $.each(data.transactions, function(idx, ele) {
-          let tr = $("<tr>");
-          tr.append($("<td>").text(ele.hash));
-          tr.append($("<td>").text(ele.from));
-          tr.append($("<td>").text(ele.to));
-          tr.append($("<td>").text(ele.type));
-          tr.append($("<td>").text(ele.status));
-          tr.append($("<td>").text(ele.mined));
-          tr.append($("<td>").text(moment.utc(ele.createdAt).fromNow()));
-          $("#allTransactions tbody").append(tr);
-        });
-      },
-      error: function(xhr, textStatus, errorThrown) {
-        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
-      },
-    });
-  }
-
-  function getBalance(idx) {
-    // console.log(gAllAddresses.filter(x => x.idx == idx));
-    const addr = gAllAddresses.filter(x => x.idx == idx)[0].address;
-    const urlTarget = window.location.protocol + "//" + window.location.host + '/eth/balance/' + addr;
-    
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: urlTarget,
-      success: function(data) {
-        window.location.reload();
+        $("#countClient").text(data.clients.length);
       },
       error: function(xhr, textStatus, errorThrown) {
         $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
@@ -219,8 +110,7 @@
 
   $(document).ready(function() {
     getAllAddresses();
-    getAllSmartContracts();
-    getAllTransactions();
+    getAllClients();
   });
 </script>
 
